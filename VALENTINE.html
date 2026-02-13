@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💌 Private Valentine Quiz</title>
+<style>
+  body{
+    font-family: Arial, sans-serif;
+    background: url('https://www.publicdomainpictures.net/pictures/270000/velka/pink-heart-background.jpg') center/cover no-repeat;
+    color: #800040;
+    text-align: center;
+    padding: 20px;
+  }
+  #quiz, #result { display: none; }
+  .question {
+    background: rgba(255, 240, 245, 0.8);
+    border-radius: 15px;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 500px;
+  }
+  button {
+    background: #ff4da6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background: #ff1a75;
+  }
+  input { padding: 10px; font-size: 18px; border-radius: 8px; border: 2px solid #ff99cc;}
+</style>
+</head>
+<body>
+
+<h1>💌 A Secret Valentine Quiz</h1>
+
+<div id="passwordScreen">
+  <p>Enter the password to start:</p>
+  <input type="password" id="pwd" placeholder="MMDDYYYY">
+  <br><br>
+  <button onclick="checkPwd()">Start Quiz</button>
+  <p id="pwdMsg" style="color: red;"></p>
+</div>
+
+<div id="quiz">
+  <div id="q1" class="question">
+    <p>Question 1: Who is the reason behind my biggest smiles?</p>
+    <button onclick="nextQ('q2')">A) The man reading this</button>
+    <button onclick="nextQ('q2')">B) Someone else</button>
+  </div>
+
+  <div id="q2" class="question" style="display:none;">
+    <p>Question 2: Who makes my heart feel at home?</p>
+    <button onclick="nextQ('q3')">A) You, always</button>
+    <button onclick="nextQ('q3')">B) Nobody else</button>
+  </div>
+
+  <div id="q3" class="question" style="display:none;">
+    <p>Question 3: Who do I want to grow old and make endless memories with?</p>
+    <button onclick="nextQ('q4')">A) My loving husband</button>
+    <button onclick="nextQ('q4')">B) Anyone else?</button>
+  </div>
+
+  <div id="q4" class="question" style="display:none;">
+    <p>Final Question: Will you be my Valentine today and for every Valentine we share?</p>
+    <button onclick="finalAnswer(true)">A) YES 💖</button>
+    <button onclick="finalAnswer(false)">B) NO 😅</button>
+  </div>
+</div>
+
+<div id="result" class="question"></div>
+
+<script>
+const correctPwd = prompt("Please save this page and remember: password is your wife’s date of birth in MMDDYYYY");
+
+function checkPwd() {
+  const entered = document.getElementById('pwd').value;
+  if (entered === correctPwd) {
+    document.getElementById('passwordScreen').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+  } else {
+    document.getElementById('pwdMsg').textContent = "Incorrect — try again!";
+  }
+}
+
+function nextQ(next) {
+  document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+  document.getElementById(next).style.display = 'block';
+}
+
+function finalAnswer(isYes) {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  if (isYes) {
+    document.getElementById('result').innerHTML = "🎉 Congratulations! You are officially my Valentine 💕";
+  } else {
+    document.getElementById('result').innerHTML = "❌ Answer invalid 😅 Try again!";
+  }
+}
+</script>
+
+</body>
+</html>
