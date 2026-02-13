@@ -13,7 +13,7 @@
     overflow-x: hidden;
   }
 
-  /* Background image: your photo */
+  /* Default background image for quiz */
   body::before {
     content: "";
     position: fixed;
@@ -168,12 +168,18 @@ function finalAnswer(isYes) {
   resultDiv.style.display = 'block';
 
   if (isYes) {
+    // Change background to your romantic image
+    document.body.style.setProperty('--last-bg', "url('romantic_end.jpg')");
+    document.body.style.backgroundImage = "url('romantic_end.jpg')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    
     resultDiv.innerHTML = "🎉 Congratulations! You are officially my Valentine 💕";
 
     // Add large teddy in center
     const container = document.getElementById('effectContainer');
     const centerTeddy = document.createElement('img');
-    centerTeddy.src = 'https://i.postimg.cc/fbFmhk7g/kissing-teddy.png';
+    centerTeddy.src = 'romantic_teddy.png'; // Your large teddy image in folder
     centerTeddy.classList.add('centerTeddy');
     container.appendChild(centerTeddy);
 
@@ -188,7 +194,7 @@ function startEffects() {
   const container = document.getElementById('effectContainer');
 
   // Small teddies floating
-  const teddyImg = 'https://i.postimg.cc/fbFmhk7g/kissing-teddy.png';
+  const teddyImg = 'romantic_teddy.png'; // small floating teddy
   for(let i=0;i<5;i++){
     const teddy = document.createElement('img');
     teddy.src = teddyImg;
