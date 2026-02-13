@@ -1,271 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💌 Private Valentine Quiz</title>
-<style>
-  body{
-    font-family: Arial, sans-serif;
-    margin:0; padding:0;
-    color: #800040;
-    text-align: center;
-    overflow-x: hidden;
-  }
-
-  /* Default background image for quiz */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: url('our_photo.jpg') center/cover no-repeat;
-    background-size: cover;
-    z-index: 0;
-  }
-
-  /* Overlay for readability */
-  body::after {
-    content: "";
-    position: fixed;
-    top:0; left:0;
-    width: 100%; height: 100%;
-    background-color: rgba(255, 240, 245, 0.5); 
-    z-index: 0;
-  }
-
-  #passwordScreen, #quiz, #result { 
-    position: relative; 
-    z-index: 1; 
-  }
-
-  .question {
-    background: rgba(255, 240, 245, 0.85);
-    border-radius: 15px;
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 500px;
-  }
-
-  button {
-    background: #ff4da6;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    margin: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-
-  button:hover { background: #ff1a75; }
-
-  input { 
-    padding: 10px; font-size: 18px; border-radius: 8px; border: 2px solid #ff99cc;
-  }
-
-  #effectContainer {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 2;
-  }
-
-  .teddy {
-    position: absolute;
-    width: 80px;
-  }
-
-  .centerTeddy {
-    position: absolute;
-    width: 180px;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-  }
-
-  .heart {
-    position: absolute;
-    width: 15px; height: 15px;
-    background-color: #ff6699;
-    clip-path: polygon(50% 0%, 61% 17%, 78% 17%, 85% 25%, 85% 42%, 50% 85%, 15% 42%, 15% 25%, 22% 17%, 39% 17%);
-    opacity: 0.8;
-  }
-
-  .balloon {
-    position: absolute;
-    width: 40px; height: 60px;
-    border-radius: 50%;
-    opacity: 0.9;
-  }
-</style>
-</head>
-<body>
-
-<h1>💌 A Secret Valentine Quiz</h1>
-
-<div id="passwordScreen">
-  <p>Enter the password to start:</p>
-  <input type="password" id="pwd" placeholder="DDMMYYYY">
-  <br><br>
-  <button onclick="checkPwd()">Start Quiz</button>
-  <p id="pwdMsg" style="color: red;"></p>
-</div>
-
-<div id="quiz">
-  <div id="q1" class="question">
-    <p>Question 1: Who is the reason behind my biggest smiles?</p>
-    <button onclick="nextQ('q2')">A) The man reading this</button>
-    <button onclick="nextQ('q2')">B) Someone else</button>
-  </div>
-
-  <div id="q2" class="question" style="display:none;">
-    <p>Question 2: Who makes my heart feel at home?</p>
-    <button onclick="nextQ('q3')">A) You, always</button>
-    <button onclick="nextQ('q3')">B) Nobody else</button>
-  </div>
-
-  <div id="q3" class="question" style="display:none;">
-    <p>Question 3: Who do I want to grow old and make endless memories with?</p>
-    <button onclick="nextQ('q4')">A) My loving husband</button>
-    <button onclick="nextQ('q4')">B) Anyone else?</button>
-  </div>
-
-  <div id="q4" class="question" style="display:none;">
-    <p>Final Question: Will you be my Valentine today and for every Valentine we share?</p>
-    <button onclick="finalAnswer(true)">A) YES 💖</button>
-    <button onclick="finalAnswer(false)">B) NO 😅</button>
-  </div>
-</div>
-
-<div id="result" class="question"></div>
-<div id="effectContainer"></div>
-
+<!-- Only the relevant JS part changes -->
 <script>
-const correctPwd = "20061998";
-
-function checkPwd() {
-  const entered = document.getElementById('pwd').value;
-  if (entered === correctPwd) {
-    document.getElementById('passwordScreen').style.display = 'none';
-    document.getElementById('quiz').style.display = 'block';
-  } else {
-    document.getElementById('pwdMsg').textContent = "Incorrect — try again!";
-  }
-}
-
-function nextQ(next) {
-  document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
-  document.getElementById(next).style.display = 'block';
-}
-
-function finalAnswer(isYes) {
-  document.getElementById('quiz').style.display = 'none';
+function finalAnswer(isYes){
+  document.getElementById('quiz').style.display='none';
   const resultDiv = document.getElementById('result');
-  resultDiv.style.display = 'block';
+  resultDiv.style.display='block';
 
-  if (isYes) {
-    // CHANGE BACKGROUND TO ROMANTIC IMAGE FOR LAST PAGE
-    document.body.style.backgroundImage = "url('romantic.jpg')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
+  if(isYes){
+    // Change background to romantic image
+    document.getElementById('background').style.backgroundImage = "url('romantic.jpg')";
+    document.getElementById('background').style.backgroundSize = "cover";
+    document.getElementById('background').style.backgroundPosition = "center";
 
     resultDiv.innerHTML = "🎉 Congratulations! You are officially my Valentine 💕";
 
     // Add large teddy in center
     const container = document.getElementById('effectContainer');
     const centerTeddy = document.createElement('img');
-    centerTeddy.src = 'kissing_teddy.png'; // your teddy image in folder
+    centerTeddy.src = 'kissing_teddy.png';
     centerTeddy.classList.add('centerTeddy');
     container.appendChild(centerTeddy);
+
+    // Make teddy gently bounce
+    let angle = 0;
+    function bounceTeddy(){
+      angle += 0.05;
+      centerTeddy.style.transform = `translateX(-50%) translateY(${Math.sin(angle)*15}px)`;
+      requestAnimationFrame(bounceTeddy);
+    }
+    bounceTeddy();
 
     startEffects();
   } else {
     resultDiv.innerHTML = "❌ Answer invalid 😅 Try again!";
   }
 }
-
-// Floating hearts and balloons
-function startEffects() {
-  const container = document.getElementById('effectContainer');
-
-  // Small teddies floating
-  const teddyImg = 'kissing_teddy.png';
-  for(let i=0;i<5;i++){
-    const teddy = document.createElement('img');
-    teddy.src = teddyImg;
-    teddy.classList.add('teddy');
-    teddy.style.left = Math.random()*window.innerWidth+'px';
-    teddy.style.top = window.innerHeight+'px';
-    container.appendChild(teddy);
-
-    let start = Date.now();
-    const duration = Math.random()*4000 + 5000;
-    const amplitude = Math.random()*100 + 50;
-    const freq = Math.random()*0.01 + 0.005;
-    function animateTeddy(){
-      let time = Date.now()-start;
-      let progress = time/duration;
-      if(progress>1){ teddy.remove(); return; }
-      teddy.style.top = window.innerHeight - progress*(window.innerHeight+100)+'px';
-      teddy.style.left = parseFloat(teddy.style.left) + amplitude*Math.sin(progress*10*Math.PI*freq)+'px';
-      requestAnimationFrame(animateTeddy);
-    }
-    animateTeddy();
-  }
-
-  // Hearts
-  for(let i=0;i<30;i++){
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.style.left = Math.random()*window.innerWidth+'px';
-    heart.style.top = window.innerHeight+'px';
-    container.appendChild(heart);
-
-    let start = Date.now();
-    const duration = Math.random()*3000 + 4000;
-    const amplitude = Math.random()*50 + 20;
-    const freq = Math.random()*0.01 + 0.005;
-    function animateHeart(){
-      let time = Date.now()-start;
-      let progress = time/duration;
-      if(progress>1){ heart.remove(); return; }
-      heart.style.top = window.innerHeight - progress*(window.innerHeight+50)+'px';
-      heart.style.left = parseFloat(heart.style.left) + amplitude*Math.sin(progress*10*Math.PI*freq)+'px';
-      requestAnimationFrame(animateHeart);
-    }
-    animateHeart();
-  }
-
-  // Balloons
-  const colors = ['#ff6699','#ffcc66','#66ccff','#ff99cc','#ff6666'];
-  for(let i=0;i<10;i++){
-    const balloon = document.createElement('div');
-    balloon.classList.add('balloon');
-    balloon.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
-    balloon.style.left = Math.random()*window.innerWidth+'px';
-    balloon.style.top = window.innerHeight+'px';
-    container.appendChild(balloon);
-
-    let start = Date.now();
-    const duration = Math.random()*4000 + 5000;
-    const amplitude = Math.random()*80 + 40;
-    const freq = Math.random()*0.01 + 0.003;
-    function animateBalloon(){
-      let time = Date.now()-start;
-      let progress = time/duration;
-      if(progress>1){ balloon.remove(); return; }
-      balloon.style.top = window.innerHeight - progress*(window.innerHeight+150)+'px';
-      balloon.style.left = parseFloat(balloon.style.left) + amplitude*Math.sin(progress*10*Math.PI*freq)+'px';
-      requestAnimationFrame(animateBalloon);
-    }
-    animateBalloon();
-  }
-}
 </script>
-
-</body>
-</html>
