@@ -80,11 +80,17 @@
 
   .heart {
     position: absolute;
-    width: 15px;
-    height: 15px;
+    width: 15px; height: 15px;
     background-color: #ff6699;
     clip-path: polygon(50% 0%, 61% 17%, 78% 17%, 85% 25%, 85% 42%, 50% 85%, 15% 42%, 15% 25%, 22% 17%, 39% 17%);
     opacity: 0.8;
+  }
+
+  .balloon {
+    position: absolute;
+    width: 40px; height: 60px;
+    border-radius: 50% 50% 50% 50%;
+    opacity: 0.9;
   }
 </style>
 </head>
@@ -130,7 +136,7 @@
 <div id="effectContainer"></div>
 
 <script>
-const correctPwd = "20061998"; // Your DDMMYYYY date of birth
+const correctPwd = "20061998";
 
 function checkPwd() {
   const entered = document.getElementById('pwd').value;
@@ -160,9 +166,84 @@ function finalAnswer(isYes) {
   }
 }
 
-// Start teddy and heart effects
+// Floating teddies, hearts, and balloons
 function startEffects() {
   const container = document.getElementById('effectContainer');
   
-  // Add teddies
-  const teddyImg = 'https://i.postimg.cc/fbFmhk7g/ki
+  // Teddies
+  const teddyImg = 'https://i.postimg.cc/fbFmhk7g/kissing-teddy.png';
+  for(let i=0;i<5;i++){
+    const teddy = document.createElement('img');
+    teddy.src = teddyImg;
+    teddy.classList.add('teddy');
+    teddy.style.left = Math.random()*window.innerWidth+'px';
+    teddy.style.top = window.innerHeight+'px';
+    container.appendChild(teddy);
+
+    let start = Date.now();
+    const duration = Math.random()*4000 + 5000;
+    const amplitude = Math.random()*100 + 50;
+    const freq = Math.random()*0.01 + 0.005;
+    function animateTeddy(){
+      let time = Date.now()-start;
+      let progress = time/duration;
+      if(progress>1){ teddy.remove(); return; }
+      teddy.style.top = window.innerHeight - progress*(window.innerHeight+100)+'px';
+      teddy.style.left = parseFloat(teddy.style.left) + amplitude*Math.sin(progress*10*Math.PI*freq)+'px';
+      requestAnimationFrame(animateTeddy);
+    }
+    animateTeddy();
+  }
+
+  // Hearts
+  for(let i=0;i<30;i++){
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random()*window.innerWidth+'px';
+    heart.style.top = window.innerHeight+'px';
+    container.appendChild(heart);
+
+    let start = Date.now();
+    const duration = Math.random()*3000 + 4000;
+    const amplitude = Math.random()*50 + 20;
+    const freq = Math.random()*0.01 + 0.005;
+    function animateHeart(){
+      let time = Date.now()-start;
+      let progress = time/duration;
+      if(progress>1){ heart.remove(); return; }
+      heart.style.top = window.innerHeight - progress*(window.innerHeight+50)+'px';
+      heart.style.left = parseFloat(heart.style.left) + amplitude*Math.sin(progress*10*Math.PI*freq)+'px';
+      requestAnimationFrame(animateHeart);
+    }
+    animateHeart();
+  }
+
+  // Balloons
+  const colors = ['#ff6699','#ffcc66','#66ccff','#ff99cc','#ff6666'];
+  for(let i=0;i<10;i++){
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    balloon.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+    balloon.style.left = Math.random()*window.innerWidth+'px';
+    balloon.style.top = window.innerHeight+'px';
+    container.appendChild(balloon);
+
+    let start = Date.now();
+    const duration = Math.random()*4000 + 5000;
+    const amplitude = Math.random()*80 + 40;
+    const freq = Math.random()*0.01 + 0.003;
+    function animateBalloon(){
+      let time = Date.now()-start;
+      let progress = time/duration;
+      if(progress>1){ balloon.remove(); return; }
+      balloon.style.top = window.innerHeight - progress*(window.innerHeight+150)+'px';
+      balloon.style.left = parseFloat(balloon.style.left) + amplitude*Math.sin(progress*10*Math.PI*freq)+'px';
+      requestAnimationFrame(animateBalloon);
+    }
+    animateBalloon();
+  }
+}
+</script>
+
+</body>
+</html>
