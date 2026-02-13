@@ -75,7 +75,16 @@
 
   .teddy {
     position: absolute;
-    width: 50px;
+    width: 80px;
+  }
+
+  .centerTeddy {
+    position: absolute;
+    width: 180px;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
   }
 
   .heart {
@@ -89,7 +98,7 @@
   .balloon {
     position: absolute;
     width: 40px; height: 60px;
-    border-radius: 50% 50% 50% 50%;
+    border-radius: 50%;
     opacity: 0.9;
   }
 </style>
@@ -160,17 +169,25 @@ function finalAnswer(isYes) {
 
   if (isYes) {
     resultDiv.innerHTML = "🎉 Congratulations! You are officially my Valentine 💕";
+
+    // Add large teddy in center
+    const container = document.getElementById('effectContainer');
+    const centerTeddy = document.createElement('img');
+    centerTeddy.src = 'https://i.postimg.cc/fbFmhk7g/kissing-teddy.png';
+    centerTeddy.classList.add('centerTeddy');
+    container.appendChild(centerTeddy);
+
     startEffects();
   } else {
     resultDiv.innerHTML = "❌ Answer invalid 😅 Try again!";
   }
 }
 
-// Floating teddies, hearts, and balloons
+// Floating hearts and balloons
 function startEffects() {
   const container = document.getElementById('effectContainer');
-  
-  // Teddies
+
+  // Small teddies floating
   const teddyImg = 'https://i.postimg.cc/fbFmhk7g/kissing-teddy.png';
   for(let i=0;i<5;i++){
     const teddy = document.createElement('img');
