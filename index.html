@@ -1,37 +1,44 @@
-<!-- Only the relevant JS part changes -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Quiz</title>
+<style>
+body { font-family: Arial; text-align:center; margin:0; padding:0; }
+#background { position: fixed; top:0; left:0; width:100%; height:100%; background: url('our_photo.jpg') center/cover no-repeat; z-index:0; }
+#passwordScreen, #quiz { position: relative; z-index:2; margin-top:50px; }
+#quiz { display:none; }
+button { padding:10px 20px; margin:5px; }
+</style>
+</head>
+<body>
+<div id="background"></div>
+<div id="passwordScreen">
+  <p>Enter password:</p>
+  <input type="password" id="pwd" placeholder="DDMMYYYY">
+  <button onclick="checkPwd()">Start</button>
+  <p id="msg" style="color:red;"></p>
+</div>
+
+<div id="quiz">
+  <p>Question 1: Who is the reason behind my biggest smiles?</p>
+  <button onclick="nextQ()">A) You</button>
+  <button onclick="nextQ()">B) Someone else</button>
+</div>
+
 <script>
-function finalAnswer(isYes){
-  document.getElementById('quiz').style.display='none';
-  const resultDiv = document.getElementById('result');
-  resultDiv.style.display='block';
-
-  if(isYes){
-    // Change background to romantic image
-    document.getElementById('background').style.backgroundImage = "url('romantic.jpg')";
-    document.getElementById('background').style.backgroundSize = "cover";
-    document.getElementById('background').style.backgroundPosition = "center";
-
-    resultDiv.innerHTML = "🎉 Congratulations! You are officially my Valentine 💕";
-
-    // Add large teddy in center
-    const container = document.getElementById('effectContainer');
-    const centerTeddy = document.createElement('img');
-    centerTeddy.src = 'kissing_teddy.png';
-    centerTeddy.classList.add('centerTeddy');
-    container.appendChild(centerTeddy);
-
-    // Make teddy gently bounce
-    let angle = 0;
-    function bounceTeddy(){
-      angle += 0.05;
-      centerTeddy.style.transform = `translateX(-50%) translateY(${Math.sin(angle)*15}px)`;
-      requestAnimationFrame(bounceTeddy);
-    }
-    bounceTeddy();
-
-    startEffects();
-  } else {
-    resultDiv.innerHTML = "❌ Answer invalid 😅 Try again!";
-  }
+function checkPwd(){
+  const pwd=document.getElementById('pwd').value;
+  if(pwd==='20061998'){
+    document.getElementById('passwordScreen').style.display='none';
+    document.getElementById('quiz').style.display='block';
+  } else { document.getElementById('msg').textContent='Wrong password'; }
+}
+function nextQ(){
+  document.getElementById('background').style.backgroundImage="url('romantic.jpg')";
+  alert("Congrats! Quiz works!");
 }
 </script>
+</body>
+</html>
